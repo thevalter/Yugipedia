@@ -1,0 +1,227 @@
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #17171d;
+    overflow-x: hidden;
+}
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    width: 60%;
+    margin: 2rem 0.5rem;
+    height: 2rem;
+    border: none;
+    border-bottom: 1px solid #e4dede;
+    color: #e4dede;
+    font-size: 1rem;
+    background-color: transparent;
+}
+
+input:focus {
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+
+#search {
+    color: #e4dede;
+    transition: all .4s;
+    font-size: 1.2rem;
+}
+
+#search:hover {
+    cursor: pointer;
+    font-size: 1.3rem;
+}
+
+datalist {
+    margin-top: 14.5rem;
+    position: absolute;
+    max-height: 10rem;
+    border: 0 none;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+datalist option {
+    font-size: 0.8em;
+    padding: 0.3em 1em;
+    background-color: #202022;
+    cursor: pointer;
+    color: #e4dede;
+}
+
+datalist option:hover,
+datalist option:focus {
+    color: #e4dede;
+    background-color: #323235;
+    outline: 0 none;
+}
+
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.selectContainer div {
+    margin: 1rem auto;
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+}
+
+select {
+    margin: 1rem auto;
+    width: 30%;
+    height: 1.5rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #e4dede;
+    color: #a7a1a1;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+select:focus {
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+
+#numberResults {
+    color: #e4dede;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.cardContainer {
+    margin-top: 6rem;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.cardContainer span {
+    font-size: 2rem;
+    margin: auto;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #e4dede;
+    width: 90%;
+    text-align: center;
+}
+
+.cardContainer p {
+    color: #e4dede;
+}
+
+.render {
+    width: 27%;
+    height: auto;
+    text-align: center;
+    margin: 2rem auto;
+    padding: 1rem;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+    background-color: #202022;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    border-radius: .5rem;
+}
+
+.render p {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #e4dede;
+}
+
+.render img {
+    max-width: 100%;
+    max-height: 100%;
+    margin: 1rem auto;
+}
+
+.render span {
+    font-size: .8rem;
+    color: #e4dede;
+}
+
+.render button{
+    cursor: pointer;
+}
+
+.modal {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    display: none;
+    background-color: #17171d;
+    color: #a7a1a1;
+    flex-direction: column;
+    /* padding: 2rem 0; */
+    /* border: 1px solid red; */
+}
+
+.modal .bi-x-circle {
+    color: #ffffff;
+    font-size: 2rem;
+    right: 2rem;
+    top: 2rem;
+    cursor: pointer;
+    position: fixed;
+}
+
+.cardAmplied{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 90%;
+    max-width: 100%;
+}
+
+.cardDetails {
+    max-width: 95%;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 7rem;
+    display: flex;
+}
+
+.cardDetails .imgWrapper{
+    width: 35%;
+    height: auto;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    
+}
+
+.cardDetails .textDetails{
+    display: flex;
+    margin-top: 1rem;
+    flex-direction: column;
+    width: 55%;
+    height: auto;
+}
+
+.cardDetails img {
+    max-width: 100%;
+    max-height: 550px;
+}
+
+.cardDetails p {
+    font-size: 1.5rem;
+    margin: .5rem 1rem;
+    font-weight: bold;
+    color: #e4dede;
+}
+
+.cardDetails span {
+    font-size: 1rem;
+    color: #e4dede;
+    margin: .5rem 1rem;
+}
