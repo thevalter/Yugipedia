@@ -19,29 +19,36 @@
     </div>
 
     <div class="searchContainer">
-        <input autocomplete="off" type="text" placeholder="Procurar card..." id="searchField" list="dataList">
-        <i class="bi bi-search" id="search"></i>
+        <div>
+            <input autocomplete="off" type="text" placeholder="Procurar card..." id="searchField" list="dataList">
+            <i class="bi bi-search" id="search"></i>
+        </div>
+        <select id="selectLang">
+            <option value="">Selecione o idioma</option>
+            <option value="">Inglês</option>
+            <option value="language=pt">Português</option>
+        </select>
         <datalist id="dataList"></datalist>
     </div>
 
     <div class="selectContainer">
         <div>
             <select id="selectArchetypes">
-                <option value="">Pesquise cards pelo arquetipo</option>
+                <option value="">Arquetipo</option>
             </select>
             <select id="selectTypes">
-                <option value="">Pesquise cards pelo tipo</option>
+                <option value="">Tipo</option>
             </select>
             <select id="selectRace">
-                <option value="">Pesquise cards pelo grupo</option>
+                <option value="">Grupos</option>
             </select>
         </div>
         <div>
             <select id="selectLevel">
-                <option value="">Pesquise cards pelo level</option>
+                <option value="">Level/Rank</option>
             </select>
             <select id="selectLink">
-                <option value="">Pesquise cards pelo linkSet</option>
+                <option value="">Linkset</option>
             </select>
         </div>
     </div>

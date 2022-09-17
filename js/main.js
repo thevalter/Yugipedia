@@ -1,9 +1,7 @@
 const urlBase = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?'
-
-const langPT = '&language=pt';
-
 let count = 0;
 
+const selectLang = document.querySelector('#selectLang');
 const selectArchetypes = document.getElementById('selectArchetypes');
 const selectTypes = document.getElementById('selectTypes');
 const selectRace = document.getElementById('selectRace');
@@ -81,6 +79,18 @@ const cardAmplied = document.querySelector('.cardAmplied');
     };
   };
 
+  fetch('https://db.ygoprodeck.com/api/v7/randomcard.php').then(resp => resp.json()).then(result => {
+    result.card_images.map(el => {
+      cardContainer.innerHTML += `
+      <div class="render">
+                  <p>${result.name}</p>
+                  <img src="${el["image_url"]}" alt="">
+                  <span><b>Description: </b>${result.desc}</span>
+                  <button data-id="${result.id}">Ver mais</button>
+      </div>`;
+    });
+  });
+
   searchField.addEventListener('keyup', _.debounce(searchCardId, 900));
 
 })();
@@ -91,6 +101,53 @@ function searchCardFilter(searched, data) {
   })
 };
 
+function renderCardAmplied(event) {
+  event.preventDefault();
+
+  const cardId = event.target.getAttribute('data-id');
+  const valueLang = selectLang.options[selectLang.selectedIndex].value;
+  let desc = 'Description';
+
+  if (valueLang != '') {
+    desc = 'Descrição';
+  };
+
+  if (cardId) {
+    cardContainer.style.display = 'none';
+    modal.style.display = 'flex';
+    dataList.style.display = "none";
+    fetch(`${urlBase}id=${cardId}&${valueLang}`).then(resp => resp.json()).then(result => {
+      result.data.map(element => {
+        element.card_images.map(el => {
+          cardAmplied.innerHTML = `
+             <div class="cardDetails">
+                          <div class="imgWrapper">
+                            <img src="${el["image_url"]}" alt="">
+                          </div>
+                          <div class="textDetails">
+                            <p>${element.name}</p>
+                            <span><b>Arquetipo: </b>${element.archetype}</span>
+                            <span><b>Ataque: </b>${element.atk}</span>
+                            <span><b>Defesa: </b>${element.def}</span>
+                            <span><b>Atributo: </b>${element.attribute}</span>
+                            <span><b>Level: </b>${element.level}</span>
+                            <span><b>Race: </b>${element.race}</span>
+                            <span><b>Type: </b>${element.type}</span>
+                            <span><b>${desc}: </b>${element.desc}</span>
+                            </div>
+              </div>`;
+        });
+      });
+    });
+  };
+
+  closeModal.addEventListener('click', () => {
+    cardContainer.style.display = 'flex';
+    modal.style.display = 'none';
+    cardAmplied.innerHTML = '';
+  });
+};
+
 function main() {
 
   const valueArch = selectArchetypes.options[selectArchetypes.selectedIndex].value;
@@ -98,103 +155,72 @@ function main() {
   const valueRace = selectRace.options[selectRace.selectedIndex].value;
   const valueLevel = selectLevel.options[selectLevel.selectedIndex].value;
   const valueLink = selectLink.options[selectLink.selectedIndex].value;
-  let ID = '';
+  const valueLang = selectLang.options[selectLang.selectedIndex].value;
 
-  if (searchField.value != '') {
-    ID = `id=${searchField.value.replace(/\D/g, '')}`;
-  }
+  if (searchField.value || valueArch || valueType || valueRace || valueLevel || valueLink || valueLang != '') {
+    let ID = '';
+    let desc = 'Description';
 
-  fetch(`${urlBase}${valueType}${valueRace}${valueArch}${valueLevel}${valueLink}${ID}${langPT}`)
-    .then(response => response.json())
+    if (searchField.value != '') {
+      ID = `id=${searchField.value.replace(/\D/g, '')}`;
+    }
 
-    .then(result => {
+    if (valueLang != '') {
+      desc = 'Descrição';
+    };
 
-      const dataResult = result.data;
-      function searchCard(event) {
-        const searched = event.target.value;
+    fetch(`${urlBase}${valueType}&${valueRace}&${valueArch}&${valueLevel}&${valueLink}&${ID}&${valueLang}`)
+      .then(response => response.json())
 
-        const cardFound = searchCardFilter(searched, dataResult);
-        if (cardFound.length > 0) {
-          Render(cardFound)
-        } else {
-          cardContainer.innerHTML = '<span>Nenhum card encontrado</span>';
-          numberResults.innerHTML = '';
+      .then(result => {
+
+        const dataResult = result.data;
+        function searchCard(event) {
+          const searched = event.target.value;
+
+          const cardFound = searchCardFilter(searched, dataResult);
+          if (cardFound.length > 0) {
+            Render(cardFound);
+          } else {
+            cardContainer.innerHTML = '<span>Nenhum card encontrado</span>';
+            numberResults.innerHTML = '';
+          };
         };
-      };
 
-      function Render(data) {
-        let render = '';
-        data.map((element) => {
-          element.card_images.map(el => {
+        function Render(data) {
+          let render = '';
+          data.map((element) => {
+            element.card_images.map(el => {
 
-            render += `
-                      <div class="render click">
+              render += `
+                      <div class="render">
                                   <p>${element.name}</p>
                                   <img src="${el["image_url"]}" alt="">
-                                  <span><b>Descrição: </b>${element.desc}</span>
+                                  <span><b>${desc}: </b>${element.desc}</span>
                                   <button data-id="${element.id}">Ver mais</button>
                       </div>`;
 
-            cardContainer.innerHTML = render;
-            count++;
-            numberResults.innerHTML = `${count} resultados encontrados`;
-          });
-        });
-        count = 0;
-      };
-
-      document.body.addEventListener('click', (event) => {
-
-        event.preventDefault();
-
-        const cardId = event.target.getAttribute('data-id');
-
-        if (cardId) {
-          cardContainer.style.display = 'none';
-          modal.style.display = 'flex';
-          dataList.style.display = "none";
-          fetch(`${urlBase}id=${cardId}`).then(resp => resp.json()).then(result => {
-            result.data.map(element => {
-              element.card_images.map(el => {
-                cardAmplied.innerHTML = `
-                     <div class="cardDetails">
-                                  <div class="imgWrapper">
-                                    <img src="${el["image_url"]}" alt="">
-                                  </div>
-                                  <div class="textDetails">
-                                    <p>${element.name}</p>
-                                    <span><b>Arquetipo: </b>${element.archetype}</span>
-                                    <span><b>Ataque: </b>${element.atk}</span>
-                                    <span><b>Defesa: </b>${element.def}</span>
-                                    <span><b>Atributo: </b>${element.attribute}</span>
-                                    <span><b>Level: </b>${element.level}</span>
-                                    <span><b>Race: </b>${element.race}</span>
-                                    <span><b>Type: </b>${element.type}</span>
-                                    <span><b>Descrição: </b>${element.desc}</span>
-                                    </div>
-                      </div>`;
-              })
+              cardContainer.innerHTML = render;
+              count++;
+              numberResults.innerHTML = `${count} resultados encontrados`;
             });
           });
+          count = 0;
         };
 
-        closeModal.addEventListener('click', () => {
-          cardContainer.style.display = 'flex';
-          modal.style.display = 'none';
-          cardAmplied.innerHTML = '';
-        });
+        searchField.addEventListener('keyup', _.debounce(searchCard, 100));
+
+        Render(dataResult);
+
+      }).catch(() => {
+        cardContainer.innerHTML = '<span>Ocorreu um erro, por favor, selecione apenas um campo de pesquisa e deixe os outros com o valor padrão.</span>';
+        numberResults.innerHTML = `${count} resultados encontrados`;
       });
-
-      searchField.addEventListener('keyup', _.debounce(searchCard, 100));
-
-      Render(dataResult);
-
-    }).catch(() => {
-      cardContainer.innerHTML = '<span>Ocorreu um erro, por favor, selecione apenas um campo de pesquisa e deixe os outros com o valor padrão.</span>'
-    });
+  };
 };
 
 search.addEventListener("click", main);
+document.body.addEventListener('click', renderCardAmplied);
 
 
 
