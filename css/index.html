@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <title>Yugipedia</title>
+</head>
+
+<body>
+
+    <div class="modal">
+        <i class="bi bi-x-circle" id="close"></i>
+        <div class="cardAmplied">
+        </div>
+    </div>
+
+    <h1>Yugipedia</h1>
+
+    <div class="searchContainer">
+        <div>
+            <input autocomplete="off" type="text" placeholder="Procurar card..." id="searchField" list="dataList">
+            <i class="bi bi-search" id="search"></i>
+        </div>
+        <select id="selectLang">
+            <option value="">Selecione o idioma</option>
+            <option value="">Inglês</option>
+            <option value="language=pt">Português</option>
+        </select>
+        <datalist id="dataList"></datalist>
+    </div>
+
+    <div class="selectContainer">
+        <div>
+            <select id="selectArchetypes">
+                <option value="">Arquetipo</option>
+            </select>
+            <select id="selectTypes">
+                <option value="">Tipo</option>
+            </select>
+            <select id="selectRace">
+                <option value="">Grupos</option>
+            </select>
+        </div>
+        <div>
+            <select id="selectLevel">
+                <option value="">Level/Rank</option>
+            </select>
+            <select id="selectLink">
+                <option value="">Linkset</option>
+            </select>
+        </div>
+    </div>
+
+    <p id="numberResults"></p>
+    <div class="cardContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/datalist-css/dist/datalist-css.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+        integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
